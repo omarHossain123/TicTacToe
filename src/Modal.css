@@ -1,0 +1,41 @@
+
+/* This function Creates the overlay that covers the entire screen, ensuring the modal content 
+   is the focus.*/
+.modal {
+    display: flex; /* Centers the modal content horizontally and vertically */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    position: fixed; /* Positions the modal relative to the viewport, so it stays in place */
+    z-index: 1; /* Ensures the modal appears above other content */
+    left: 0; /* Aligns the modal to the left edge of the viewport */
+    top: 0; /* Aligns the modal to the top edge of the viewport */
+    width: 100%; /* Makes the modal full width of the viewport */
+    height: 100%; /* Makes the modal full height of the viewport */
+    overflow: auto; /* Adds scrollbars if the content overflows */
+    background-color: rgba(0, 0, 0, 0.4); /* Adds a semi-transparent black background */
+  }
+  
+  /* This function Styles the box that contains the main message or content of the modal.*/
+  .modal-content {
+    background-color: #fefefe; /* White background color */
+    margin: auto; /* Center the modal content within the modal */
+    padding: 20px; /* Adds padding inside the modal content */
+    border: 1px solid #888; /* Adds a light gray border */
+    width: 80%; /* Sets the width of the modal content */
+    text-align: center; /* Centers text within the modal content */
+  }
+
+  /* This function Styles the close button, making it easily identifiable and interactive*/
+  .close{
+    color: #aaa;
+    float: right; /* Positions the button to the right */
+    font-size: 28px; /* Large font size for the close button */
+    font-weight: bold; /* Bold text */
+}
+
+.close:hover,
+.close:focus {
+  color: black; /* Changes color to black when hovered or focused */
+  text-decoration: none; /* Removes underline decoration */
+  cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+}

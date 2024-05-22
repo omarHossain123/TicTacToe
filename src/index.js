@@ -1,8 +1,9 @@
-//Lines 2-5 bring all the necessary pieces together:
-import React, { StrictMode } from "react"; // React
-import { createRoot } from "react-dom/client"; // React’s library to talk to web browsers (React DOM)
-import "./styles.css"; // the styles for the components
-import App from "./App"; // the component created in App.js. 
+// This file initilizes the React application 
+
+import React, { StrictMode } from "react"; 
+import { createRoot } from "react-dom/client"; 
+import "./styles.css"; 
+import App from "./App"; 
 
 const root = createRoot(document.getElementById("root"));
 root.render(

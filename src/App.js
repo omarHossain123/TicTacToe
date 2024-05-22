@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Modal from './Modal';
 
+// 'Square' Component: This component represents an individual square on the board 
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -8,6 +10,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
+// 'Board' Component: This component represents the entire board and manages the state of each square 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
@@ -23,9 +26,13 @@ function Board({ xIsNext, squares, onPlay }) {
   }
 
   const winner = calculateWinner(squares);
+  const isDraw = !squares.includes(null) && !winner;
+
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
+  } else if (isDraw) {
+    status = 'Draw';
   } else {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
@@ -52,9 +59,13 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
+// 'Game' Component: This component manages the overall state and history of the game 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [winner, setWinner] = useState(null);
+
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -62,25 +73,23 @@ export default function Game() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-  }
 
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
-  }
-
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Go to move #' + move;
-    } else {
-      description = 'Go to game start';
+    const winner = calculateWinner(nextSquares);
+    if (winner) {
+      setWinner(winner);
+      setShowModal(true);
     }
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
+  }
+
+  function undoMove() {
+    if (currentMove > 0) {
+      setCurrentMove(currentMove - 1);
+    }
+  }
+
+  function closeModal() {
+    setShowModal(false);
+  }
 
   return (
     <div className="game">
@@ -88,12 +97,14 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <button onClick={undoMove}>Undo</button>
       </div>
+      {showModal && <Modal winner={winner} onClose={closeModal} />}
     </div>
   );
 }
 
+// This function checks if there is a winner 
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
