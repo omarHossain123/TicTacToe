@@ -1,1 +1,1 @@
-hey this my project!!
+This is my first project!! it is a simple tic-tac-toe game that had the feature of going back to any move you wish. 

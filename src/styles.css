@@ -1,10 +1,3 @@
-/*
-This file defines the styles for the React app. The first two CSS selectors (* and body) define the 
-style of large parts of the app while the .square selector defines the style of any component where the 
-className property is set to square. In the code, that would match the button from your Square component 
-in the App.js file.
-*/
-
 * {
   box-sizing: border-box;
 }
