@@ -1,17 +1,30 @@
-/* this class creates a modal dialog that displays a message indicating the winner of the game.*/
-import { useState } from 'react';
+import React from 'react';
 import './Modal.css';
-export default Modal; 
 
-// This component will display the winner message as a big pop up
-function Modal({winner, onClose}){
-  return(
+// Modal component that displays the winner message
+function Modal({ winner, onClose, onRestart, onMainMenu }) {  
+  let message;
+  if (winner === 'Draw') {
+    message = 'Draw';
+  } else {
+    message = `${winner} WON!`;
+  }
+
+  function handleRestart() {
+    onRestart(); // Call the onRestart function passed as prop
+    onClose(); // Close the modal after restarting the game
+  }
+
+  return (
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h1>{winner} WON!</h1>
+        <h2>{message}</h2>
+        <button onClick={handleRestart}>Restart</button>
+        <button onClick={onMainMenu}>Main Menu</button> {/* Use onMainMenu here */}
       </div>
     </div>
   );
 }
 
+export default Modal;
