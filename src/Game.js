@@ -4,12 +4,14 @@ import Modal from './Modal';
 import calculateWinner from './calculateWinner'; 
 
 // Game Component: Manages the overall state and history of the game
-export default function Game({ mode, onMainMenu }) {
-  // State variables to manage game history, current move, winner, and modal visibility
+export default function Game({ mode, difficulty, onMainMenu }) {
+  // State variables to manage game history, current move, winner, modal visibility, and timer
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(null); 
+  const [timer, setTimer] = useState(null); 
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -17,18 +19,58 @@ export default function Game({ mode, onMainMenu }) {
   // useEffect to handle computer's move in single player mode
   useEffect(() => {
     if (mode === 'single' && !xIsNext && !winner) {
-      const nextSquares = makeComputerMove(currentSquares);
+      const nextSquares = makeComputerMove(currentSquares, difficulty);
       handlePlay(nextSquares);
     }
-  }, [currentSquares, mode, xIsNext, winner]);
+  }, [currentSquares, mode, xIsNext, winner, difficulty]);
 
   // useEffect to handle computer's move after undo in single player mode
   useEffect(() => {
     if (mode === 'single' && !xIsNext && currentMove < history.length - 1 && !winner) {
-      const nextSquares = makeComputerMove(history[currentMove]);
+      const nextSquares = makeComputerMove(history[currentMove], difficulty);
       handlePlay(nextSquares);
     }
-  }, [currentMove, history, mode, xIsNext, winner]);
+  }, [currentMove, history, mode, xIsNext, winner, difficulty]);
+
+  // useEffect to start and update the timer for single player mode
+  useEffect(() => {
+    if (mode === 'single' && xIsNext && !winner) {
+      // Set initial time limit based on difficulty level
+      let initialTime;
+      if (difficulty === 'easy') {
+        initialTime = 15;
+      } else if (difficulty === 'medium') {
+        initialTime = 10;
+      } else {
+        initialTime = 5;
+      }
+      setRemainingTime(initialTime);
+  
+      const timerInterval = setInterval(() => {
+        setRemainingTime(prevTime => {
+          let newTime = prevTime - 1;
+          if (newTime === 0) {
+            clearInterval(timerInterval);
+            handlePlayTimeout();
+          }
+          return newTime;
+        });
+      }, 1000);
+  
+      setTimer(timerInterval);
+  
+      // Cleanup interval on component unmount
+      return () => clearInterval(timerInterval);
+    }
+  }, [currentMove, mode, difficulty, winner, xIsNext]);
+  
+
+  // Cleanup timer interval on winner change or mode change
+  useEffect(() => {
+    if (winner || mode !== 'single' || !xIsNext) {
+      clearInterval(timer);
+    }
+  }, [winner, mode, xIsNext]);
 
   // Function to handle player's move and check for winner
   function handlePlay(nextSquares) {
@@ -44,16 +86,84 @@ export default function Game({ mode, onMainMenu }) {
       setWinner('Draw');
       setShowModal(true);
     }
+
+    clearInterval(timer);
   }
 
-  // Function to make a random move for the computer
-  function makeComputerMove(squares) {
+  // Function to make a move for the computer based on the selected difficulty
+  function makeComputerMove(squares, difficulty) {
     const availableSquares = squares.map((square, index) => square === null ? index : null).filter(index => index !== null);
-    const randomIndex = Math.floor(Math.random() * availableSquares.length);
-    const nextSquares = squares.slice();
-    nextSquares[availableSquares[randomIndex]] = 'O';
+  
+    let nextSquares;
+  
+    if (difficulty === 'easy') {
+      // Easy: Random move
+      const randomIndex = Math.floor(Math.random() * availableSquares.length);
+      nextSquares = squares.slice();
+      nextSquares[availableSquares[randomIndex]] = 'O';
+    } else {
+      if (difficulty === 'medium') {
+        // Medium: Try to block opponent's winning move, otherwise random move
+        nextSquares = squares.slice();
+        const winningMove = findWinningMove(nextSquares, 'X');
+        if (winningMove !== null) {
+          nextSquares[winningMove] = 'O';
+        } else {
+          const randomIndex = Math.floor(Math.random() * availableSquares.length);
+          nextSquares[availableSquares[randomIndex]] = 'O';
+        }
+      } else {
+        // Hard: Try to win or block opponent's winning move, otherwise random move
+        nextSquares = squares.slice();
+        const winningMove = findWinningMove(nextSquares, 'O');
+        const blockingMove = findWinningMove(nextSquares, 'X');
+        if (winningMove !== null) {
+          nextSquares[winningMove] = 'O';
+        } else if (blockingMove !== null) {
+          nextSquares[blockingMove] = 'O';
+        } else {
+          const randomIndex = Math.floor(Math.random() * availableSquares.length);
+          nextSquares[availableSquares[randomIndex]] = 'O';
+        }
+      }
+    }
+  
     return nextSquares;
   }
+  
+
+  // Function to find a winning move for the given player
+  function findWinningMove(squares, player) {
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i] === null) {
+        squares[i] = player;
+        if (calculateWinner(squares) === player) {
+          squares[i] = null;
+          return i;
+        }
+        squares[i] = null;
+      }
+    }
+    return null;
+  }
+
+  // Function to handle the timeout for the player's move
+  function handlePlayTimeout() {
+    const availableSquares = [];
+    for (let index = 0; index < currentSquares.length; index++) {
+      if (currentSquares[index] === null) {
+        availableSquares.push(index);
+      }
+    }
+  
+    if (availableSquares.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableSquares.length);
+      const nextSquares = currentSquares.slice();
+      nextSquares[availableSquares[randomIndex]] = 'X';
+      handlePlay(nextSquares);
+    }
+  }
+  
 
   // Function to handle undo move
   function undoMove() {
@@ -63,6 +173,8 @@ export default function Game({ mode, onMainMenu }) {
     if (mode === 'single' && currentMove > 0 && currentMove % 2 === 0) {
       setCurrentMove(currentMove - 2);
     }
+    setRemainingTime(null); // Reset the timer when undoing
+    clearInterval(timer);
   }
 
   // Function to close modal
@@ -76,6 +188,8 @@ export default function Game({ mode, onMainMenu }) {
     setCurrentMove(0);
     setWinner(null);
     setShowModal(false);
+    setRemainingTime(null); // Reset the timer when restarting the game
+    clearInterval(timer);
   }
 
   return (
@@ -85,6 +199,10 @@ export default function Game({ mode, onMainMenu }) {
       </div>
       <div className="game-info">
         <button onClick={undoMove}>Undo</button>
+        {/* Display the remaining time only in single-player mode */}
+        {mode === 'single' && xIsNext && !winner && (
+          <div>Time Remaining: {remainingTime}s</div>
+        )}
       </div>
       {showModal && 
         <Modal 

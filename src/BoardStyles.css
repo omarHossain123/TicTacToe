@@ -1,0 +1,29 @@
+/* Styles for the board component */
+.board {
+    background-color: #f5f5f5; /* Light gray background */
+    border: 3px solid #333; /* Dark gray border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+    padding: 20px; /* Add padding around the board */
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(3, 1fr); /* Three evenly spaced columns */
+    grid-gap: 10px; /* Add gap between squares */
+  }
+  
+  /* Styles for individual squares */
+  .square {
+    background-color: #fff; /* White background */
+    border: 2px solid #999; /* Light gray border */
+    font-size: 24px; /* Font size */
+    font-weight: bold; /* Bold text */
+    line-height: 60px; /* Center text vertically */
+    text-align: center; /* Center text horizontally */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  /* Hover effect for squares */
+  .square:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  

@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Intro Component: This component renders the introductory screen where the user can choose 
+// Intro Component: This component renders the introductory screen where the user can choose
 // between single-player and multiplayer modes.
 function Intro({ onStartGame }) {
   return (
@@ -12,4 +12,4 @@ function Intro({ onStartGame }) {
   );
 }
 
-export default Intro; 
+export default Intro;
