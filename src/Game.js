@@ -32,17 +32,21 @@ export default function Game({ mode, difficulty, onMainMenu }) {
     }
   }, [currentMove, history, mode, xIsNext, winner, difficulty]);
 
-  // useEffect to start and update the timer for single player mode
+  // useEffect to start and update the timer for both single and multiplayer modes
   useEffect(() => {
-    if (mode === 'single' && xIsNext && !winner) {
-      // Set initial time limit based on difficulty level
+    if ((mode === 'single' && xIsNext && !winner) || (mode === 'multi' && !winner)) {
+      // Set initial time limit
       let initialTime;
-      if (difficulty === 'easy') {
-        initialTime = 15;
-      } else if (difficulty === 'medium') {
-        initialTime = 10;
+      if (mode === 'single') {
+        if (difficulty === 'easy') {
+          initialTime = 15;
+        } else if (difficulty === 'medium') {
+          initialTime = 10;
+        } else {
+          initialTime = 5;
+        }
       } else {
-        initialTime = 5;
+        initialTime = 10;
       }
       setRemainingTime(initialTime);
   
@@ -63,11 +67,10 @@ export default function Game({ mode, difficulty, onMainMenu }) {
       return () => clearInterval(timerInterval);
     }
   }, [currentMove, mode, difficulty, winner, xIsNext]);
-  
 
   // Cleanup timer interval on winner change or mode change
   useEffect(() => {
-    if (winner || mode !== 'single' || !xIsNext) {
+    if (winner || (mode !== 'single' && mode !== 'multi') || (mode === 'single' && !xIsNext)) {
       clearInterval(timer);
     }
   }, [winner, mode, xIsNext]);
@@ -130,7 +133,6 @@ export default function Game({ mode, difficulty, onMainMenu }) {
   
     return nextSquares;
   }
-  
 
   // Function to find a winning move for the given player
   function findWinningMove(squares, player) {
@@ -159,11 +161,10 @@ export default function Game({ mode, difficulty, onMainMenu }) {
     if (availableSquares.length > 0) {
       const randomIndex = Math.floor(Math.random() * availableSquares.length);
       const nextSquares = currentSquares.slice();
-      nextSquares[availableSquares[randomIndex]] = 'X';
+      nextSquares[availableSquares[randomIndex]] = xIsNext ? 'X' : 'O';
       handlePlay(nextSquares);
     }
   }
-  
 
   // Function to handle undo move
   function undoMove() {
@@ -194,17 +195,17 @@ export default function Game({ mode, difficulty, onMainMenu }) {
 
   return (
     <div className="game">
-      <div className="game-buttons"> {}
-        <button onClick={restartGame}>Restart</button> {}
-        <button onClick={onMainMenu}>Main Menu</button> {}
+      <div className="game-buttons">
+        <button onClick={restartGame}>Restart</button>
+        <button onClick={onMainMenu}>Main Menu</button>
       </div>
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
         <button onClick={undoMove}>Undo</button>
-        {/* Display the remaining time only in single-player mode */}
-        {mode === 'single' && xIsNext && !winner && (
+        {/* Display the remaining time in both single and multiplayer modes */}
+        {((mode === 'single' && xIsNext) || mode === 'multi') && !winner && (
           <div>Time Remaining: {remainingTime}s</div>
         )}
       </div>
