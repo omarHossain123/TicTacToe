@@ -1,9 +1,9 @@
-// App.js
 import React, { useState } from 'react';
 import Intro from './Intro';
 import Difficulty from './Difficulty';
 import Game from './Game';
-import Modal from './Modal'; 
+import Modal from './Modal';
+import './styles.css'; 
 
 function App() {
   const [gameMode, setGameMode] = useState(null);
@@ -38,8 +38,11 @@ function App() {
   }
 
   function toggleTheme() {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.body.classList.toggle('dark', newTheme === 'dark');
   }
+   
 
   return (
     <div className={`app ${theme}`}>

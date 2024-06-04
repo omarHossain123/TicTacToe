@@ -5,153 +5,215 @@
 
 /* Sets the font for the body and adds a gradient background */
 body {
-  font-family: 'Arial', sans-serif; /* Sets the font family */
-  margin: 0; /* Removes default margin */
-  padding: 0; /* Removes default padding */
-  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Adds a gradient background */
-  color: #fff; /* Sets the text color to white */
-  height: 100vh; /* Sets the height to full viewport height */
-  display: flex; /* Enables flexbox layout */
-  justify-content: center; /* Centers content horizontally */
-  align-items: center; /* Centers content vertically */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Light mode background */
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Styles for dark mode */
+body.dark {
+  background: #322f42; /* Changes background colour */
+}
+
+body.dark .theme-switcher {
+  background-color: #4b3a70; /* Changes button colour */
+  color: white;
+}
+
+body.dark button {
+  background-color: #4b3a70; /* Changes button colour */
+  color: white;
+}
+
+body.dark .square {
+  background-color: #4b3a70; /* Changes button colour */
+  color: white;
+}
+
+body.dark .modal-content {
+  background-color: #800080; /* Changes button colour */
+  color: white;
+}
+
+/* Ensure other body styles in dark mode */
+body.dark {
+  /* Add these styles if they are missing */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Existing styles for light mode */
 
 /* Sets the color for all h1 and h2 elements */
 h1, h2 {
-  color: #fff; /* Sets the text color to white */
+  color: #fff;
 }
 
 /* Styles for the app container */
 .app {
-  text-align: center; /* Centers text */
-  padding: 20px; /* Adds padding */
+  text-align: center;
+  padding: 20px;
 }
 
 /* Styles for the individual squares on the board */
 .square {
-  background: #ff7e5f; /* Sets background color */
-  border: 2px solid #fff; /* Adds a white border */
-  float: left; /* Floats squares to the left */
-  font-size: 48px; /* Sets the font size */
-  font-weight: bold; /* Makes the font bold */
-  line-height: 68px; /* Sets line height */
-  height: 68px; /* Sets the height */
-  margin-right: -1px; /* Sets negative right margin */
-  margin-top: -1px; /* Sets negative top margin */
-  padding: 0; /* Removes padding */
-  text-align: center; /* Centers text */
-  width: 68px; /* Sets the width */
-  transition: background 0.3s; /* Adds transition for background color */
+  background: #ff7e5f;
+  border: 2px solid #fff;
+  float: left;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 68px;
+  height: 68px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 68px;
+  transition: background 0.3s;
 }
 
 /* Changes background color of square on hover */
 .square:hover {
-  background: #feb47b; /* Sets hover background color */
+  background: #feb47b;
 }
 
 /* Ensures the board rows clear floats */
 .board-row:after {
-  clear: both; /* Clears floats */
-  content: ''; /* Adds empty content */
-  display: table; /* Sets display to table */
+  clear: both;
+  content: '';
+  display: table;
 }
 
 /* Styles for the status text */
 .status {
-  margin-bottom: 10px; /* Adds bottom margin */
-  font-size: 24px; /* Sets font size */
-  font-weight: bold; /* Makes the font bold */
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 /* Styles for the game container */
 .game {
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Sets flex direction to column */
-  align-items: center; /* Centers items horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Adds margin to the game board */
 .game-board {
-  margin-bottom: 20px; /* Adds bottom margin */
+  margin-bottom: 20px;
 }
 
 /* Styles for the game info section */
 .game-info {
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Sets flex direction to column */
-  align-items: center; /* Centers items horizontally */
-  font-size: 18px; /* Sets font size */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
 }
 
 /* General button styles */
 button {
-  background-color: #feb47b; /* Sets background color */
-  border: none; /* Removes border */
-  color: white; /* Sets text color to white */
-  padding: 10px 20px; /* Adds padding */
-  text-align: center; /* Centers text */
-  text-decoration: none; /* Removes text decoration */
-  display: inline-block; /* Sets display to inline-block */
-  font-size: 16px; /* Sets font size */
-  margin: 4px 2px; /* Adds margin */
-  cursor: pointer; /* Changes cursor to pointer */
-  border-radius: 4px; /* Rounds the corners */
-  transition: background-color 0.3s; /* Adds transition for background color */
+  background-color: #feb47b;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
 /* Changes background color of button on hover */
 button:hover {
-  background-color: #ff7e5f; /* Sets hover background color */
+  background-color: #ff7e5f;
 }
 
 /* Styles for the intro and difficulty screens */
 .intro, .difficulty {
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Sets flex direction to column */
-  align-items: center; /* Centers items horizontally */
-  justify-content: center; /* Centers items vertically */
-  height: 100vh; /* Sets height to full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 /* Styles for the modal overlay */
 .modal {
-  display: flex; /* Enables flexbox layout */
-  justify-content: center; /* Centers content horizontally */
-  align-items: center; /* Centers content vertically */
-  position: fixed; /* Sets position to fixed */
-  z-index: 1; /* Sets z-index */
-  left: 0; /* Aligns to left edge */
-  top: 0; /* Aligns to top edge */
-  width: 100%; /* Sets width to full viewport width */
-  height: 100%; /* Sets height to full viewport height */
-  overflow: auto; /* Adds scrollbars if content overflows */
-  background-color: rgba(0, 0, 0, 0.4); /* Adds semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* Styles for the modal content */
 .modal-content {
-  background-color: #ff7e5f; /* Sets background color */
-  margin: auto; /* Centers the modal content */
-  padding: 20px; /* Adds padding */
-  border: 1px solid #888; /* Adds light gray border */
-  width: 80%; /* Sets width */
-  text-align: center; /* Centers text */
-  color: #fff; /* Sets text color to white */
-  border-radius: 10px; /* Rounds the corners */
+  background-color: #ff7e5f;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
 }
 
 /* Styles for the close button */
 .close {
-  color: #fff; /* Sets text color to white */
-  float: right; /* Floats to the right */
-  font-size: 28px; /* Sets font size */
-  font-weight: bold; /* Makes the font bold */
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 /* Changes close button color on hover or focus */
 .close:hover,
 .close:focus {
-  color: #000; /* Sets hover and focus color to black */
-  text-decoration: none; /* Removes text decoration */
-  cursor: pointer; /* Changes cursor to pointer */
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Position the theme switcher button in the top right corner */
+.theme-switcher {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #feb47b;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.theme-switcher:hover {
+  background-color: #ff7e5f;
 }
