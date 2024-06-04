@@ -1,4 +1,4 @@
-/* Ensures that the box-sizing is set to border-box for all elements */
+/* Ensure that the box-sizing is set to border-box for all elements */
 * {
   box-sizing: border-box;
 }
@@ -36,6 +36,10 @@ body.dark .square {
   color: white;
 }
 
+body.dark .square:hover { /* Nice highlight color for dark mode */
+  background: #6a5f91; /* Added this block for dark mode hover effect */
+}
+
 body.dark .modal-content {
   background-color: #800080; /* Changes button colour */
   color: white;
@@ -52,6 +56,11 @@ body.dark {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Apply hover effect to all buttons in dark mode */
+body.dark button:hover { /* Added this block for dark mode button hover effect */
+  background: #6a5f91; /* Same highlight color as for squares */
 }
 
 /* Existing styles for light mode */
@@ -216,4 +225,17 @@ button:hover {
 
 .theme-switcher:hover {
   background-color: #ff7e5f;
+}
+
+/* Styles for the game buttons */
+.game-buttons { /* Added this block for positioning the buttons */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-buttons button { /* Adjusted button styles for the game-buttons */
+  margin-bottom: 10px;
 }

@@ -194,6 +194,10 @@ export default function Game({ mode, difficulty, onMainMenu }) {
 
   return (
     <div className="game">
+      <div className="game-buttons"> {}
+        <button onClick={restartGame}>Restart</button> {}
+        <button onClick={onMainMenu}>Main Menu</button> {}
+      </div>
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
