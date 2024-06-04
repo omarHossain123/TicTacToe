@@ -1,41 +1,119 @@
-
-/* This function Creates the overlay that covers the entire screen, ensuring the modal content 
-   is the focus.*/
-   .modal {
-    display: flex; /* Centers the modal content horizontally and vertically */
-    justify-content: center; /* Centers content horizontally */
-    align-items: center; /* Centers content vertically */
-    position: fixed; /* Positions the modal relative to the viewport, so it stays in place */
-    z-index: 1; /* Ensures the modal appears above other content */
-    left: 0; /* Aligns the modal to the left edge of the viewport */
-    top: 0; /* Aligns the modal to the top edge of the viewport */
-    width: 100%; /* Makes the modal full width of the viewport */
-    height: 100%; /* Makes the modal full height of the viewport */
-    overflow: auto; /* Adds scrollbars if the content overflows */
-    background-color: rgba(0, 0, 0, 0.4); /* Adds a semi-transparent black background */
-  }
-  
-  /* This function Styles the box that contains the main message or content of the modal.*/
-  .modal-content {
-    background-color: #fefefe; /* White background color */
-    margin: auto; /* Center the modal content within the modal */
-    padding: 20px; /* Adds padding inside the modal content */
-    border: 1px solid #888; /* Adds a light gray border */
-    width: 80%; /* Sets the width of the modal content */
-    text-align: center; /* Centers text within the modal content */
-  }
-
-  /* This function Styles the close button, making it easily identifiable and interactive*/
-  .close{
-    color: #aaa;
-    float: right; /* Positions the button to the right */
-    font-size: 28px; /* Large font size for the close button */
-    font-weight: bold; /* Bold text */
+/* Styles the modal overlay */
+.modal {
+  display: flex; /* Enables flexbox layout */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  position: fixed; /* Sets position to fixed */
+  z-index: 1; /* Sets z-index */
+  left: 0; /* Aligns to left edge */
+  top: 0; /* Aligns to top edge */
+  width: 100%; /* Sets width to full viewport width */
+  height: 100%; /* Sets height to full viewport height */
+  overflow: auto; /* Adds scrollbars if content overflows */
+  background-color: rgba(0, 0, 0, 0.4); /* Adds semi-transparent black background */
 }
 
+/* Styles the modal content */
+.modal-content {
+  background-color: #ff7e5f; /* Sets background color */
+  margin: auto; /* Centers the modal content */
+  padding: 20px; /* Adds padding */
+  border: 1px solid #888; /* Adds light gray border */
+  width: 50%; /* Sets width to 50% */
+  text-align: center; /* Centers text */
+  color: #fff; /* Sets text color to white */
+  border-radius: 10px; /* Rounds the corners */
+  position: relative; /* Positions relative to contain the close button */
+}
+
+/* Styles the close button */
+.close {
+  color: #fff; /* Sets text color to white */
+  position: absolute; /* Positions absolutely within the modal content */
+  top: 10px; /* Positions 10px from the top */
+  right: 20px; /* Positions 20px from the right */
+  font-size: 28px; /* Sets font size */
+  font-weight: bold; /* Makes the font bold */
+}
+
+/* Changes close button color on hover or focus */
 .close:hover,
 .close:focus {
-  color: black; /* Changes color to black when hovered or focused */
-  text-decoration: none; /* Removes underline decoration */
-  cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+  color: #000; /* Sets hover and focus color to black */
+  text-decoration: none; /* Removes text decoration */
+  cursor: pointer; /* Changes cursor to pointer */
+}
+
+/* Styles for the winner message */
+.winner-message {
+  font-size: 36px; /* Sets font size */
+  font-weight: bold; /* Makes the font bold */
+  margin: 20px 0; /* Adds margin */
+}
+
+/* Styles the modal buttons container */
+.modal-buttons {
+  display: flex; /* Enables flexbox layout */
+  justify-content: space-around; /* Distributes buttons evenly */
+}
+
+/* General button styles */
+.modal-buttons button {
+  background-color: #feb47b; /* Sets background color */
+  border: none; /* Removes border */
+  color: white; /* Sets text color to white */
+  padding: 10px 20px; /* Adds padding */
+  text-align: center; /* Centers text */
+  text-decoration: none; /* Removes text decoration */
+  display: inline-block; /* Sets display to inline-block */
+  font-size: 16px; /* Sets font size */
+  margin: 4px 2px; /* Adds margin */
+  cursor: pointer; /* Changes cursor to pointer */
+  border-radius: 4px; /* Rounds the corners */
+  transition: background-color 0.3s; /* Adds transition for background color */
+}
+
+/* Changes background color of button on hover */
+.modal-buttons button:hover {
+  background-color: #ff7e5f; /* Sets hover background color */
+}
+
+/* Modal Transitions*/ 
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Add transition for opacity */
+}
+
+.modal.show {
+  opacity: 1; /* Show modal by changing opacity */
+}
+
+.modal-content {
+  background-color: #ff7e5f;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+  transform: scale(0.7);
+  transition: transform 0.3s ease; /* Add transition for transform */
+}
+
+.modal.show .modal-content {
+  transform: scale(1); /* Scale up the modal content */
 }

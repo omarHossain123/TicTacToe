@@ -1,132 +1,157 @@
+/* Ensures that the box-sizing is set to border-box for all elements */
 * {
   box-sizing: border-box;
 }
 
+/* Sets the font for the body and adds a gradient background */
 body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: 'Arial', sans-serif; /* Sets the font family */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Adds a gradient background */
+  color: #fff; /* Sets the text color to white */
+  height: 100vh; /* Sets the height to full viewport height */
+  display: flex; /* Enables flexbox layout */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
 }
 
-h1 {
-  margin-top: 0;
-  font-size: 22px;
+/* Sets the color for all h1 and h2 elements */
+h1, h2 {
+  color: #fff; /* Sets the text color to white */
 }
 
-h2 {
-  margin-top: 0;
-  font-size: 20px;
+/* Styles for the app container */
+.app {
+  text-align: center; /* Centers text */
+  padding: 20px; /* Adds padding */
 }
 
-h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-h5 {
-  margin-top: 0;
-  font-size: 14px;
-}
-
-h6 {
-  margin-top: 0;
-  font-size: 12px;
-}
-
-code {
-  font-size: 1.2em;
-}
-
-ul {
-  padding-inline-start: 20px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
-}
-
+/* Styles for the individual squares on the board */
 .square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 48px;
-  font-weight: bold;
-  line-height: 68px;
-  height: 68px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 68px;
+  background: #ff7e5f; /* Sets background color */
+  border: 2px solid #fff; /* Adds a white border */
+  float: left; /* Floats squares to the left */
+  font-size: 48px; /* Sets the font size */
+  font-weight: bold; /* Makes the font bold */
+  line-height: 68px; /* Sets line height */
+  height: 68px; /* Sets the height */
+  margin-right: -1px; /* Sets negative right margin */
+  margin-top: -1px; /* Sets negative top margin */
+  padding: 0; /* Removes padding */
+  text-align: center; /* Centers text */
+  width: 68px; /* Sets the width */
+  transition: background 0.3s; /* Adds transition for background color */
 }
 
+/* Changes background color of square on hover */
+.square:hover {
+  background: #feb47b; /* Sets hover background color */
+}
+
+/* Ensures the board rows clear floats */
 .board-row:after {
-  clear: both;
-  content: '';
-  display: table;
+  clear: both; /* Clears floats */
+  content: ''; /* Adds empty content */
+  display: table; /* Sets display to table */
 }
 
+/* Styles for the status text */
 .status {
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Adds bottom margin */
+  font-size: 24px; /* Sets font size */
+  font-weight: bold; /* Makes the font bold */
 }
+
+/* Styles for the game container */
 .game {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Sets flex direction to column */
+  align-items: center; /* Centers items horizontally */
 }
 
+/* Adds margin to the game board */
+.game-board {
+  margin-bottom: 20px; /* Adds bottom margin */
+}
+
+/* Styles for the game info section */
 .game-info {
-  margin-left: 20px;
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Sets flex direction to column */
+  align-items: center; /* Centers items horizontally */
+  font-size: 18px; /* Sets font size */
 }
 
-/* Basic styling for the intro screen */ 
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+/* General button styles */
+button {
+  background-color: #feb47b; /* Sets background color */
+  border: none; /* Removes border */
+  color: white; /* Sets text color to white */
+  padding: 10px 20px; /* Adds padding */
+  text-align: center; /* Centers text */
+  text-decoration: none; /* Removes text decoration */
+  display: inline-block; /* Sets display to inline-block */
+  font-size: 16px; /* Sets font size */
+  margin: 4px 2px; /* Adds margin */
+  cursor: pointer; /* Changes cursor to pointer */
+  border-radius: 4px; /* Rounds the corners */
+  transition: background-color 0.3s; /* Adds transition for background color */
 }
 
-.intro button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+/* Changes background color of button on hover */
+button:hover {
+  background-color: #ff7e5f; /* Sets hover background color */
 }
 
-.difficulty {
-  text-align: center;
-  margin-top: 50px;
+/* Styles for the intro and difficulty screens */
+.intro, .difficulty {
+  display: flex; /* Enables flexbox layout */
+  flex-direction: column; /* Sets flex direction to column */
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  height: 100vh; /* Sets height to full viewport height */
 }
 
-.difficulty button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+/* Styles for the modal overlay */
+.modal {
+  display: flex; /* Enables flexbox layout */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  position: fixed; /* Sets position to fixed */
+  z-index: 1; /* Sets z-index */
+  left: 0; /* Aligns to left edge */
+  top: 0; /* Aligns to top edge */
+  width: 100%; /* Sets width to full viewport width */
+  height: 100%; /* Sets height to full viewport height */
+  overflow: auto; /* Adds scrollbars if content overflows */
+  background-color: rgba(0, 0, 0, 0.4); /* Adds semi-transparent black background */
 }
 
-.game-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Styles for the modal content */
+.modal-content {
+  background-color: #ff7e5f; /* Sets background color */
+  margin: auto; /* Centers the modal content */
+  padding: 20px; /* Adds padding */
+  border: 1px solid #888; /* Adds light gray border */
+  width: 80%; /* Sets width */
+  text-align: center; /* Centers text */
+  color: #fff; /* Sets text color to white */
+  border-radius: 10px; /* Rounds the corners */
 }
 
-.game-info div {
-  margin-top: 10px;
-  font-size: 18px;
+/* Styles for the close button */
+.close {
+  color: #fff; /* Sets text color to white */
+  float: right; /* Floats to the right */
+  font-size: 28px; /* Sets font size */
+  font-weight: bold; /* Makes the font bold */
 }
 
+/* Changes close button color on hover or focus */
+.close:hover,
+.close:focus {
+  color: #000; /* Sets hover and focus color to black */
+  text-decoration: none; /* Removes text decoration */
+  cursor: pointer; /* Changes cursor to pointer */
+}

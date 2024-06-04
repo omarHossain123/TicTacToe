@@ -1,27 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Confetti from 'react-confetti';
 import './Modal.css';
 
-// Modal component that displays the winner message
-function Modal({ winner, onClose, onRestart, onMainMenu }) {  
-  let message;
-  if (winner === 'Draw') {
-    message = 'Draw';
-  } else {
-    message = `${winner} WON!`;
-  }
+function Modal({ winner, onClose, onRestart, onMainMenu }) {
+  const [confetti, setConfetti] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (winner && winner !== 'Draw') {
+      setConfetti(true);
+      setTimeout(() => setConfetti(false), 5000); // Confetti for 5 seconds
+    }
+    setShow(true);
+  }, [winner]);
 
   function handleRestart() {
-    onRestart(); // Call the onRestart function passed as prop
-    onClose(); // Close the modal after restarting the game
+    onRestart();
+    setShow(false);
+    onClose();
   }
 
   return (
-    <div className="modal">
+    <div className={`modal ${show ? 'show' : ''}`}>
+      {confetti && <Confetti />}
       <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
-        <h2>{message}</h2>
-        <button onClick={handleRestart}>Restart</button>
-        <button onClick={onMainMenu}>Main Menu</button> {/* Use onMainMenu here */}
+        <span className="close" onClick={() => { setShow(false); onClose(); }}>&times;</span>
+        <h2 className="winner-message">{winner === 'Draw' ? 'Draw' : `${winner} WON!`}</h2>
+        <div className="modal-buttons">
+          <button onClick={handleRestart}>Restart</button>
+          <button onClick={onMainMenu}>Main Menu</button>
+        </div>
       </div>
     </div>
   );

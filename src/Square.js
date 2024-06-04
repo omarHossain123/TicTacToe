@@ -4,9 +4,9 @@ import React from 'react';
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
-      {value}
+      <span className="square-content">{value}</span>
     </button>
   );
 }
 
-export default Square; 
+export default Square;
